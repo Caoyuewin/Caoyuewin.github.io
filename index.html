@@ -167,6 +167,401 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-C-namespace（命名空间）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/">C++ -&gt; namespace（命名空间）</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/" class="archive-article-date">
+  	<time datetime="2019-05-25T09:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用命名空间的目的"><a href="#使用命名空间的目的" class="headerlink" title="使用命名空间的目的"></a>使用命名空间的目的</h1><p>在C/C++中，变量，函数，类都是大量存在的，这些变量，函数和类的名称都存在于全局作用域中，可能会导致很多冲突，使用命名空间是对标志符的本地化，以避免命名冲突和命名污染</p>
+<h1 id="namespace关键字"><a href="#namespace关键字" class="headerlink" title="namespace关键字"></a>namespace关键字</h1><ul>
+<li><p>定义一个名为N1的命名空间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> N1 &#123;</span><br><span class="line">	<span class="keyword">int</span> a;  <span class="comment">// 定义变量</span></span><br><span class="line">	<span class="comment">//定义函数</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> x + y;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命名空间的嵌套</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> N1 &#123;</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">namespace</span> N2 &#123;</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Sub</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> x - y;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">namespace</span> N3&#123;</span><br><span class="line">		<span class="keyword">int</span> a;</span><br><span class="line">		<span class="keyword">int</span> b;</span><br><span class="line">		<span class="keyword">int</span> c;</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">Mul</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> x * y;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果存在福多个同名的命名空间，编译器会将同名的命名空间合并成一个</p>
+</li>
+</ul>
+<h1 id="命名空间的使用"><a href="#命名空间的使用" class="headerlink" title="命名空间的使用"></a>命名空间的使用</h1><ol>
+<li><p>命名空间名称 + 作用域限制符（<strong>::</strong>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"%d"</span>, N1::a);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using + 命名空间名称 + 作用域限制符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> N2::a;</span><br><span class="line"><span class="comment">//main函数中所有没有限制作用域的a都是命名空间N2中的a</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, a); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using namespace+ 命名空间名称</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> N3;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	a = <span class="number">1</span>; <span class="comment">//N3中的a</span></span><br><span class="line">	b = <span class="number">2</span>; <span class="comment">//N3中的b</span></span><br><span class="line">	c = Mul(a, b); <span class="comment">//N3中的Mul函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-C-缺省参数，函数重载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/">C++ -&gt;缺省参数，函数重载</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/" class="archive-article-date">
+  	<time datetime="2019-05-25T09:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 缺省参数：在声明或者定义函数时为函数参数指定的一个默认值,当参数缺省时，编译器使用这个默认参数</span></span><br><span class="line"><span class="comment"> *    缺省参数不能同在声明或者定义中给出</span></span><br><span class="line"><span class="comment"> *    全缺省参数：所有形参都有缺省参数</span></span><br><span class="line"><span class="comment"> *    半缺省参数：部分形参有缺省参数</span></span><br><span class="line"><span class="comment"> *        半缺省参数必须从右往左一次给出，不可以从左到右或者间隔给出</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">/*全缺省*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ADD</span><span class="params">(<span class="keyword">int</span> a = <span class="number">10</span>, <span class="keyword">int</span> b = <span class="number">20</span> , <span class="keyword">int</span> c = <span class="number">30</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//半缺省</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ADD2</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b = <span class="number">20</span> , <span class="keyword">int</span> c = <span class="number">30</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ADD3</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c = <span class="number">30</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> ret1 = ADD();</span><br><span class="line">  <span class="keyword">int</span> ret2 = ADD2(<span class="number">10</span>);</span><br><span class="line">  <span class="keyword">int</span> ret3 = ADD3(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d, %d, %d\n"</span>,ret1, ret2, ret3);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上程序分别是全缺省函数和半缺省函数（缺省第一个，缺省第一第二个）的情况，程序运行的结果是：60，60，60。<br><img src="https://img-blog.csdnimg.cn/20190428173122118.png" alt="在这里插入图片描述"></p>
+<h1 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  函数重载：C++允许在同一作用域中声明几个功能类似的同名函数，这些函数的形参列表必须不同,常用来处理功能实现类似数据不同的问题</span></span><br><span class="line"><span class="comment"> *      形参不同：参数个数、参数类型、参数顺序</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//参数类型不同</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Add</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">long</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//参数顺序不同</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">Add</span><span class="params">(<span class="keyword">long</span> x, <span class="keyword">double</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//参数个数不同</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C++的名字修饰（Name Mangling）：在编译过程中，C++编译器会把函数、变量的名称重新改编，只要其形参不同，就将其修饰为全局唯一的名称，命名规则比较复杂。而C语言的命名规则比较简单，只是在函数名称最前面加一个_，所以C语言函数名称一旦重复，就会出现函数重定义的报错，这就是为什么C语言不支持函数重载的内在原因。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-线程基本操作（创建、终止、等待、分离）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/">Linux-&gt;线程基本操作（创建、终止、等待、分离）</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/" class="archive-article-date">
+  	<time datetime="2019-05-25T09:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="线程概念及性能"><a href="#线程概念及性能" class="headerlink" title="线程概念及性能"></a>线程概念及性能</h1><ul>
+<li>线程：Linux下线程使用pcb实现，Linux下pcb是线程，也叫轻量级进程（同一个进程中的线程公用一个虚拟地址空间）</li>
+<li>进程（Linux下叫做线程组）是资源分配的基本单位</li>
+<li>线程是CPU调度的基本单位</li>
+<li>线程间的独有与共享<ul>
+<li>独有<ul>
+<li>栈（独立运行）</li>
+<li>寄存器（每个pcb都有一套独有的寄存器）<ul>
+<li>上下文数据</li>
+</ul>
+</li>
+<li>信号屏蔽字<ul>
+<li>每个线程都可以独立的阻塞某些信号，信号是对于进程而言的，系统给进程发送一个信号，这个进程中哪一个线程能处理就哪一个线程处理</li>
+</ul>
+</li>
+<li>errno (错误码)</li>
+<li>线程标识符    </li>
+</ul>
+</li>
+<li>共享<ul>
+<li>虚拟地址空间（数据段、代码段）</li>
+<li>文件描述符表</li>
+<li>信号处理动作</li>
+<li>工作路径</li>
+<li>用户id，组id<h1 id="线程创建"><a href="#线程创建" class="headerlink" title="线程创建"></a>线程创建</h1><h2 id="pthread-create"><a href="#pthread-create" class="headerlink" title="pthread_create()"></a>pthread_create()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span> *thread, <span class="keyword">const</span> <span class="keyword">pthread_addr_t</span>* addr, <span class="keyword">void</span>*(*start_routine)(<span class="keyword">void</span>*), <span class="keyword">void</span>* arg)</span></span>;</span><br><span class="line"><span class="comment">//thread:用于存放线程id</span></span><br><span class="line"><span class="comment">//addr:用于设置线程的属性，设为NULL表示默认属性</span></span><br><span class="line"><span class="comment">//start_routine:线程的入口函数</span></span><br><span class="line"><span class="comment">//arg:给线程传递的一个参数</span></span><br><span class="line"><span class="comment">//返回值：成功返回0，失败返回错误码</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//线程入口函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">th_start</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"normal thread---%s\n"</span>,(<span class="keyword">char</span>*)arg);<span class="comment">//普通线程</span></span><br><span class="line">    sleep(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line"> <span class="keyword">pthread_t</span> tid;<span class="comment">//用来存放线程空间首地址tid</span></span><br><span class="line"> <span class="keyword">int</span> ret;</span><br><span class="line"> <span class="keyword">char</span>* ptr = <span class="string">"play football"</span>;</span><br><span class="line"> ret = pthread_create(&amp;tid, <span class="literal">NULL</span>, th_start, ptr);</span><br><span class="line"> <span class="keyword">if</span>(ret)&#123;</span><br><span class="line">   perror(<span class="string">"pthread_create error:"</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//主线程</span></span><br><span class="line"> <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"mainthread id:%p]\n"</span>,tid);<span class="comment">//tid:线程空间首地址</span></span><br><span class="line">   sleep(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：gcc编译器的默认链接方式是动态链接，所以编译时要手动链接动态库：<br><code>gcc create.c -o creat -lpthread</code><br>链接选项‘-l’后面不用接空格，直接加动态库名称。如果没有链接动态库则会pthread_create是未定义的</p>
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><p><img src="https://img-blog.csdnimg.cn/20190512141354599.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>这里的执行顺序是不确定的，即任意时刻是执行主线程还是普通线程由CPU决定，没有确定的规律。</p>
+<h2 id="几个ID"><a href="#几个ID" class="headerlink" title="几个ID"></a>几个ID</h2><p><img src="https://img-blog.csdnimg.cn/20190512114436117.png" alt="在这里插入图片描述"><br><strong>PID</strong>：进程（线程组）ID<br><strong>PPID</strong>：父进程ID<br><strong>LWP（low wight progress）</strong>：线程（轻量级进程）ID（这个线程ID跟前面pthread_create的第一个参数thread不是一个东西）<br><strong>NLWP</strong>：本线程组有多少个线程</p>
+<h1 id="线程终止"><a href="#线程终止" class="headerlink" title="线程终止"></a>线程终止</h1><h2 id="pthread-exit"><a href="#pthread-exit" class="headerlink" title="pthread_exit()"></a>pthread_exit()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pthread_exit</span><span class="params">(<span class="keyword">void</span>* retval)</span></span></span><br><span class="line"><span class="function"><span class="comment">//retval:pthread_exit()通过retval返回一个值</span></span></span><br><span class="line"><span class="function"><span class="comment">//调用此接口的线程将退出</span></span></span><br><span class="line"><span class="function"><span class="comment">//无返回值</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="pthread-cancel"><a href="#pthread-cancel" class="headerlink" title="pthread_cancel()"></a>pthread_cancel()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cancel</span><span class="params">(<span class="keyword">phtread_t</span> phread)</span></span></span><br><span class="line"><span class="function"><span class="comment">//thread:要终止的线程ID</span></span></span><br><span class="line"><span class="function"><span class="comment">//此接口用于在一个线程中终止同一线程组中的另一线程</span></span></span><br><span class="line"><span class="function"><span class="comment">//成功返回0，失败返回错误码</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="线程等待"><a href="#线程等待" class="headerlink" title="线程等待"></a>线程等待</h1><h2 id="pthread-join"><a href="#pthread-join" class="headerlink" title="pthread_join()"></a>pthread_join()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_join</span><span class="params">(<span class="keyword">pthread_t</span> thread, <span class="keyword">void</span> **retval)</span></span></span><br><span class="line"><span class="function"><span class="comment">//thread 被等待线程的ID</span></span></span><br><span class="line"><span class="function"><span class="comment">//retval有多种情况</span></span></span><br><span class="line"><span class="function"><span class="comment">//1.如果thread是return返回，retval存放thread线程函数的返回值</span></span></span><br><span class="line"><span class="function"><span class="comment">//2.thread被pthread_cancel终止，retval存放常数PTHREAD_CANCELED</span></span></span><br><span class="line"><span class="function"><span class="comment">//3.thread自己调用pthread_exit退出，retval存放传递给pthread_exit的参数</span></span></span><br><span class="line"><span class="function"><span class="comment">//4.如果对thread的终止状态不感兴趣，则将retval置为NULL</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h1><h2 id="int-pthread-detach"><a href="#int-pthread-detach" class="headerlink" title="int pthread_detach()"></a>int pthread_detach()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_detach</span><span class="params">(<span class="keyword">pthread_t</span> thread)</span></span></span><br><span class="line"><span class="function"><span class="comment">//thread :线程ID</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="线程的jionable和detached状态"><a href="#线程的jionable和detached状态" class="headerlink" title="线程的jionable和detached状态"></a>线程的jionable和detached状态</h2><p>joinable（可结合）状态：每个线程刚创建时都是joinale状态的，处于joinable状态的线程只有在其对应的线程等待函数pthread_join退出后，这个线程才算是终止了，所占用的资源才会被释放。<br>所以对于一个为分离的状态，要注意它的资源释放，如果没有使用pthread_join等待其终止，此线程占用的资源将不会被释放，造成资源泄露。</p>
+<p>detached（分离）状态：要等待每个线程退出并不明智，所以对于那些不关心其终止状态的线程，就可以用pthread_detach把它们的状态设置为detached状态。处于detached状态的线程退出后系统会自动释放它所占用的资源。</p>
+<p>joinable和detached是对立的两种状态，一个线程不可能同时处于这两种状态。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-进程等待" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/25/进程等待/">Linux-&gt;进程等待</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/进程等待/" class="archive-article-date">
+  	<time datetime="2019-05-25T09:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="进程等待"><a href="#进程等待" class="headerlink" title="进程等待"></a>进程等待</h1><ul>
+<li>等待一个子进程退出</li>
+<li>避免出现僵尸进程</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件：&lt;sys/wait.h&gt;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="comment">//wait()</span></span><br><span class="line"><span class="keyword">pid_t</span> wait(<span class="keyword">int</span>* stat_loc)</span><br><span class="line"><span class="comment">//阻塞等待任意一个子进程的退出</span></span><br><span class="line"><span class="comment">//status：用于获取子进程的退出码，不关注则置空</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//waitpid</span></span><br><span class="line"><span class="keyword">pid_t</span> wait(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span>* stat_loc, <span class="keyword">int</span> options)</span><br><span class="line"><span class="comment">//若pid = -1，则waitpid的功能与wait完全相同</span></span><br><span class="line"><span class="comment">//pid &gt; 0, 则waitpid等待指定子进程退出</span></span><br><span class="line"><span class="comment">//status: 用于获取子进程的退出码， 不关注则置空（NULL）</span></span><br><span class="line"><span class="comment">//options: </span></span><br><span class="line"><span class="comment">//		0 : 阻塞等待子进程退出：只要当前进程没有退出，就一直等到当前进程退出才进行其他进程</span></span><br><span class="line"><span class="comment">//		 WNOHANG: 非阻塞等待子进程退出：若当前进程没有退出，则先进行其他进程，并且时刻关注本进程的状态</span></span><br><span class="line"><span class="comment">//返回值:</span></span><br><span class="line"><span class="comment">//		&gt;0 ：退出子进程的pid</span></span><br><span class="line"><span class="comment">//		==0：当前没有子进程退出,非阻塞时才可能返回零</span></span><br><span class="line"><span class="comment">//		&lt;0：出错</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/25/进程等待/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-生产者与消费者模型-条件变量实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/">生产者与消费者模型--条件变量实现</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" class="archive-article-date">
+  	<time datetime="2019-05-24T17:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="生产者与消费者模型"><a href="#生产者与消费者模型" class="headerlink" title="生产者与消费者模型"></a>生产者与消费者模型</h1><p>总的概括一下：一个场所，两种角色，三种关系，上图。<br><img src="https://img-blog.csdnimg.cn/20190524204942645.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol>
+<li>一个场所：生产消费队列</li>
+<li>两种角色：生产者与消费者</li>
+<li>三种关系：生产者<--->生产者    消费者<--->消费者    生产者<---> 消费者</---></---></---></li>
+</ol>
+<h2 id="生产消费队列的安全性"><a href="#生产消费队列的安全性" class="headerlink" title="生产消费队列的安全性"></a>生产消费队列的安全性</h2><p>条件变量和互斥锁有什么用：我们所用的STL提供的容器queue，并没有保证队列的安全性，所谓安全性，也就是三种关系之间的同步与互斥，因此我们需要用条件变量和互斥锁保证生产–消费队列是一个安全队列。</p>
+<ul>
+<li>同步：就生产者与消费者之间可以理解为，生产者生产完了消费者才能消费，产品生产到一半就被买走了是不合理的，可以理解为生产者与消费者之间的操作合理性。</li>
+<li>互斥：同样，互斥可以理解为生产者与生产者之间，消费者与消费者之间操作的合理性，生产者1生产时生产者2要等待，而不是与生产者1一同生产；消费者之间也类似，消费者1如果与消费者2同时消费，必定有一位消费者是没有真正的买到商品的，也就是花了钱却没买到东西。</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_QUEUE 10</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlockQueue</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    BlockQueue(<span class="keyword">int</span> cap = MAX_QUEUE):_capacity(cap)&#123;</span><br><span class="line">      pthread_mutex_init(&amp;_mutex, <span class="literal">NULL</span>);</span><br><span class="line">      pthread_cond_init(&amp;_cond_con, <span class="literal">NULL</span>);</span><br><span class="line">      pthread_cond_init(&amp;_cond_pro, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ~BlockQueue()&#123;</span><br><span class="line">      pthread_mutex_destroy(&amp;_mutex);</span><br><span class="line">      pthread_cond_destroy(&amp;_cond_con);</span><br><span class="line">      pthread_cond_destroy(&amp;_cond_pro);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//入队</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">      QueueLock();</span><br><span class="line">      <span class="keyword">while</span>(QueueIsFull())&#123;</span><br><span class="line">        ProWait();</span><br><span class="line">      &#125;</span><br><span class="line">      _queue.push(data);</span><br><span class="line">      ConWakeUp();</span><br><span class="line">      QueueUnlock();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//出队</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(<span class="keyword">int</span> *data)</span></span>&#123;</span><br><span class="line">      QueueLock();</span><br><span class="line">      <span class="keyword">while</span>(QueueIsEmpty())&#123;</span><br><span class="line">        ConWait();</span><br><span class="line">      &#125;</span><br><span class="line">      *data = _queue.front();</span><br><span class="line">      _queue.pop();</span><br><span class="line">      ProWakeUp();</span><br><span class="line">      QueueUnlock();</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueueLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_mutex_lock(&amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//加锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueueUnlock</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_mutex_unlock(&amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//解锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ConWakeUp</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_signal(&amp;_cond_con);</span><br><span class="line">    &#125;<span class="comment">//唤醒消费者</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ConWait</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_wait(&amp;_cond_con, &amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//消费者等待</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ProWait</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_wait(&amp;_cond_pro, &amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//生产者等待</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ProWakeUp</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_signal(&amp;_cond_pro);</span><br><span class="line">    &#125;<span class="comment">//唤醒生产者</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">QueueIsFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (_capacity == _queue.size());</span><br><span class="line">    &#125;<span class="comment">//判断队列是否满了</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">QueueIsEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (<span class="number">0</span> == _queue.size());</span><br><span class="line">    &#125;<span class="comment">//判断队列是否为空</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; _queue;</span><br><span class="line">    <span class="keyword">int</span> _capacity; <span class="comment">//队列节点最大值</span></span><br><span class="line">    <span class="comment">//线程安全实现成员</span></span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> _mutex;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> _cond_pro;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> _cond_con;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">thr_consumer</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">  BlockQueue *q = (BlockQueue*)arg;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    q-&gt;QueuePop(&amp;data);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"consumer get data:"</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;<span class="comment">//这里i创建为全局变量，是为了让每个生产者生产完都打印不一样的数字</span></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mutex;<span class="comment">//i++不是原子操作，这里的锁是为了保证生产者之间的互斥，也就是</span></span><br><span class="line"><span class="comment">//生产者1生产时其他生产者不能生产,而消费者线程中没有非原子操作，因此消费者与消费者之前本身就是互斥的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//生产者线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">thr_productor</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">  BlockQueue *q = (BlockQueue*)arg;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    pthread_mutex_lock(&amp;mutex);</span><br><span class="line">    q-&gt;QueuePush(i++);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; <span class="string">"productor put data:"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    pthread_mutex_unlock(&amp;mutex); </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  BlockQueue q;</span><br><span class="line">  <span class="keyword">pthread_t</span> ctid[<span class="number">4</span>], ptid[<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">int</span> i, ret;</span><br><span class="line">  pthread_mutex_init(&amp;mutex, <span class="literal">NULL</span>);<span class="comment">//初始化锁</span></span><br><span class="line">  <span class="comment">//创建四个消费者</span></span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">    ret = pthread_create(&amp;ctid[i], <span class="literal">NULL</span>, thr_consumer, (<span class="keyword">void</span>*)&amp;q);</span><br><span class="line">    <span class="keyword">if</span>(ret != <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//创建四个消费者</span></span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">    ret = pthread_create(&amp;ptid[i], <span class="literal">NULL</span>, thr_productor, (<span class="keyword">void</span>*)&amp;q);</span><br><span class="line">    <span class="keyword">if</span>(ret != <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line">    </span><br><span class="line"> <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   pthread_join(ctid[i], <span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line"> <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   pthread_join(ptid[i], <span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-first-pubblish" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

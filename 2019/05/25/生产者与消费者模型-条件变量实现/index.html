@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://Caoyuewin.github.io">
-  <title>Archives: 2019 | Just Keep Running</title>
+  <title>生产者与消费者模型--条件变量实现 | Just Keep Running</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Just Keep Running">
-<meta property="og:url" content="http://Caoyuewin.github.io/archives/2019/index.html">
+  <meta name="description" content="生产者与消费者模型总的概括一下：一个场所，两种角色，三种关系，上图。  一个场所：生产消费队列 两种角色：生产者与消费者 三种关系：生产者生产者    消费者消费者    生产者 消费者  生产消费队列的安全性条件变量和互斥锁有什么用：我们所用的STL提供的容器queue，并没有保证队列的安全性，所谓安全性，也就是三种关系之间的同步与互斥，因此我们需要用条件变量和互斥锁保证生产–消费队列是一个安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生产者与消费者模型--条件变量实现">
+<meta property="og:url" content="http://Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/index.html">
 <meta property="og:site_name" content="Just Keep Running">
-<meta property="og:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta property="og:description" content="生产者与消费者模型总的概括一下：一个场所，两种角色，三种关系，上图。  一个场所：生产消费队列 两种角色：生产者与消费者 三种关系：生产者生产者    消费者消费者    生产者 消费者  生产消费队列的安全性条件变量和互斥锁有什么用：我们所用的STL提供的容器queue，并没有保证队列的安全性，所谓安全性，也就是三种关系之间的同步与互斥，因此我们需要用条件变量和互斥锁保证生产–消费队列是一个安全">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190524204942645.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-05-24T17:03:42.136Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Just Keep Running">
-<meta name="twitter:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta name="twitter:title" content="生产者与消费者模型--条件变量实现">
+<meta name="twitter:description" content="生产者与消费者模型总的概括一下：一个场所，两种角色，三种关系，上图。  一个场所：生产消费队列 两种角色：生产者与消费者 三种关系：生产者生产者    消费者消费者    生产者 消费者  生产消费队列的安全性条件变量和互斥锁有什么用：我们所用的STL提供的容器queue，并没有保证队列的安全性，所谓安全性，也就是三种关系之间的同步与互斥，因此我们需要用条件变量和互斥锁保证生产–消费队列是一个安全">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190524204942645.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="Just Keep Running" type="application/atom+xml">
   
@@ -165,184 +168,176 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-生产者与消费者模型-条件变量实现" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/Caoyuewin.github.io/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/">C++ -&gt; namespace（命名空间）</a>
+    <h1 class="article-title" itemprop="name">
+      生产者与消费者模型--条件变量实现
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/">C++ -&gt;缺省参数，函数重载</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/">Linux-&gt;线程基本操作（创建、终止、等待、分离）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/进程等待/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/进程等待/">Linux-&gt;进程等待</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" class="archive-article-date">
+        
+        <a href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" class="archive-article-date">
   	<time datetime="2019-05-24T17:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/">生产者与消费者模型--条件变量实现</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="生产者与消费者模型"><a href="#生产者与消费者模型" class="headerlink" title="生产者与消费者模型"></a>生产者与消费者模型</h1><p>总的概括一下：一个场所，两种角色，三种关系，上图。<br><img src="https://img-blog.csdnimg.cn/20190524204942645.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol>
+<li>一个场所：生产消费队列</li>
+<li>两种角色：生产者与消费者</li>
+<li>三种关系：生产者<--->生产者    消费者<--->消费者    生产者<---> 消费者</---></---></---></li>
+</ol>
+<h2 id="生产消费队列的安全性"><a href="#生产消费队列的安全性" class="headerlink" title="生产消费队列的安全性"></a>生产消费队列的安全性</h2><p>条件变量和互斥锁有什么用：我们所用的STL提供的容器queue，并没有保证队列的安全性，所谓安全性，也就是三种关系之间的同步与互斥，因此我们需要用条件变量和互斥锁保证生产–消费队列是一个安全队列。</p>
+<ul>
+<li>同步：就生产者与消费者之间可以理解为，生产者生产完了消费者才能消费，产品生产到一半就被买走了是不合理的，可以理解为生产者与消费者之间的操作合理性。</li>
+<li>互斥：同样，互斥可以理解为生产者与生产者之间，消费者与消费者之间操作的合理性，生产者1生产时生产者2要等待，而不是与生产者1一同生产；消费者之间也类似，消费者1如果与消费者2同时消费，必定有一位消费者是没有真正的买到商品的，也就是花了钱却没买到东西。</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_QUEUE 10</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlockQueue</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    BlockQueue(<span class="keyword">int</span> cap = MAX_QUEUE):_capacity(cap)&#123;</span><br><span class="line">      pthread_mutex_init(&amp;_mutex, <span class="literal">NULL</span>);</span><br><span class="line">      pthread_cond_init(&amp;_cond_con, <span class="literal">NULL</span>);</span><br><span class="line">      pthread_cond_init(&amp;_cond_pro, <span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ~BlockQueue()&#123;</span><br><span class="line">      pthread_mutex_destroy(&amp;_mutex);</span><br><span class="line">      pthread_cond_destroy(&amp;_cond_con);</span><br><span class="line">      pthread_cond_destroy(&amp;_cond_pro);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//入队</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">      QueueLock();</span><br><span class="line">      <span class="keyword">while</span>(QueueIsFull())&#123;</span><br><span class="line">        ProWait();</span><br><span class="line">      &#125;</span><br><span class="line">      _queue.push(data);</span><br><span class="line">      ConWakeUp();</span><br><span class="line">      QueueUnlock();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//出队</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(<span class="keyword">int</span> *data)</span></span>&#123;</span><br><span class="line">      QueueLock();</span><br><span class="line">      <span class="keyword">while</span>(QueueIsEmpty())&#123;</span><br><span class="line">        ConWait();</span><br><span class="line">      &#125;</span><br><span class="line">      *data = _queue.front();</span><br><span class="line">      _queue.pop();</span><br><span class="line">      ProWakeUp();</span><br><span class="line">      QueueUnlock();</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueueLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_mutex_lock(&amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//加锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">QueueUnlock</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_mutex_unlock(&amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//解锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ConWakeUp</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_signal(&amp;_cond_con);</span><br><span class="line">    &#125;<span class="comment">//唤醒消费者</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ConWait</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_wait(&amp;_cond_con, &amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//消费者等待</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ProWait</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_wait(&amp;_cond_pro, &amp;_mutex);</span><br><span class="line">    &#125;<span class="comment">//生产者等待</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ProWakeUp</span><span class="params">()</span></span>&#123;</span><br><span class="line">      pthread_cond_signal(&amp;_cond_pro);</span><br><span class="line">    &#125;<span class="comment">//唤醒生产者</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">QueueIsFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (_capacity == _queue.size());</span><br><span class="line">    &#125;<span class="comment">//判断队列是否满了</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">QueueIsEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (<span class="number">0</span> == _queue.size());</span><br><span class="line">    &#125;<span class="comment">//判断队列是否为空</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; _queue;</span><br><span class="line">    <span class="keyword">int</span> _capacity; <span class="comment">//队列节点最大值</span></span><br><span class="line">    <span class="comment">//线程安全实现成员</span></span><br><span class="line">    <span class="keyword">pthread_mutex_t</span> _mutex;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> _cond_pro;</span><br><span class="line">    <span class="keyword">pthread_cond_t</span> _cond_con;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">thr_consumer</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">  BlockQueue *q = (BlockQueue*)arg;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">    q-&gt;QueuePop(&amp;data);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"consumer get data:"</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;<span class="comment">//这里i创建为全局变量，是为了让每个生产者生产完都打印不一样的数字</span></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> mutex;<span class="comment">//i++不是原子操作，这里的锁是为了保证生产者之间的互斥，也就是</span></span><br><span class="line"><span class="comment">//生产者1生产时其他生产者不能生产,而消费者线程中没有非原子操作，因此消费者与消费者之前本身就是互斥的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//生产者线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">thr_productor</span><span class="params">(<span class="keyword">void</span>* arg)</span></span>&#123;</span><br><span class="line">  BlockQueue *q = (BlockQueue*)arg;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    pthread_mutex_lock(&amp;mutex);</span><br><span class="line">    q-&gt;QueuePush(i++);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; <span class="string">"productor put data:"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    pthread_mutex_unlock(&amp;mutex); </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  BlockQueue q;</span><br><span class="line">  <span class="keyword">pthread_t</span> ctid[<span class="number">4</span>], ptid[<span class="number">4</span>];</span><br><span class="line">  <span class="keyword">int</span> i, ret;</span><br><span class="line">  pthread_mutex_init(&amp;mutex, <span class="literal">NULL</span>);<span class="comment">//初始化锁</span></span><br><span class="line">  <span class="comment">//创建四个消费者</span></span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">    ret = pthread_create(&amp;ctid[i], <span class="literal">NULL</span>, thr_consumer, (<span class="keyword">void</span>*)&amp;q);</span><br><span class="line">    <span class="keyword">if</span>(ret != <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//创建四个消费者</span></span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">    ret = pthread_create(&amp;ptid[i], <span class="literal">NULL</span>, thr_productor, (<span class="keyword">void</span>*)&amp;q);</span><br><span class="line">    <span class="keyword">if</span>(ret != <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="built_in">cout</span>&lt;&lt;<span class="string">"pthread create error"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line">    </span><br><span class="line"> <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   pthread_join(ctid[i], <span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line"> <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   pthread_join(ptid[i], <span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/19/first-pubblish/" class="archive-article-date">
-  	<time datetime="2019-05-19T15:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/Caoyuewin.github.io/2019/05/25/进程等待/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux-&gt;进程等待
+        
+      </div>
+    </a>
+  
+  
+    <a href="/Caoyuewin.github.io/2019/05/19/first-pubblish/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">first pubblish</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/19/first-pubblish/">first pubblish</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -365,8 +360,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
