@@ -167,6 +167,260 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-linux-makefile" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/06/09/linux-makefile/">linux-&gt;makefile</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/06/09/linux-makefile/" class="archive-article-date">
+  	<time datetime="2019-06-09T15:44:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@[toc]</p>
+<h1 id="make-makefile简介"><a href="#make-makefile简介" class="headerlink" title="make/makefile简介"></a>make/makefile简介</h1><p><strong>makefile</strong>: 普通文本文件，记录了项目的构建流程规则<br><strong>make</strong>：一个解释程序，到当前执行make命令的目录下寻找makefile文件，并且对makefile中记录的项目构建进行解释执行</p>
+<h1 id="makefile的编写规则"><a href="#makefile的编写规则" class="headerlink" title="makefile的编写规则"></a>makefile的编写规则</h1><ul>
+<li><strong>makefile</strong>的编写是有固定规则的，而不是随意的编写，下面举例说明。<br><img src="https://img-blog.csdnimg.cn/20190407093702667.png" alt="makefile"><ul>
+<li>编写规则需要注意一下几点：<ul>
+<li>第一句的格式必须是【目标对象】：【依赖对象】<ul>
+<li>依赖对象：后面的操作的对象</li>
+<li>目标对象：执行操作命令后生成的对象（文件）<br>*第二句：【Tab】【执行的操作】，==注意这里的Tab制表符不能是四个空格==</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="make的执行规则"><a href="#make的执行规则" class="headerlink" title="make的执行规则"></a>make的执行规则</h1><ul>
+<li><strong>make</strong>解释执行时，只会寻找第一个目标对象并执行其对应的操作</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190407094915693.png" alt="makefile"><br>这样编写makefile，执行make后只会生成main，不会生成main2</p>
+<ul>
+<li><strong>make</strong>执行的几个步骤（系统自行执行，用户看不到）<ul>
+<li>若目标对象不存在：执行命令操作，生成目标对象</li>
+<li>若目标对象已存在：判断是否有依赖对象<ul>
+<li>没有依赖对象：报错，不需要重新生成</li>
+<li>有依赖对象：判断依赖对象是否存在<ul>
+<li>依赖对象存在：通过目标对象和依赖对象的最后一次修改时间判断是否需要重新执行下面的命令操作</li>
+<li>依赖对象不存在(makefile所在目录没有依赖对象（文件）)：make继续子啊makefile中寻找依赖对象的生成规则，进而生成目标对象，根据这个规则，如果相同时生成main和main2，可以这样写：<br><img src="https://img-blog.csdnimg.cn/20190407105004946.png" alt="在这里插入图片描述"><br>将main和main2作为All的依赖对象，make就会继续寻找main和main2的生成规则并且执行对应的操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="编写技巧"><a href="#编写技巧" class="headerlink" title="编写技巧"></a>编写技巧</h1><h2 id="三个预定义变量"><a href="#三个预定义变量" class="headerlink" title="三个预定义变量"></a>三个预定义变量</h2><ul>
+<li>$@：目标对象</li>
+<li>$^：所有依赖对象</li>
+<li>$&lt;：依赖对象中的第一个</li>
+</ul>
+<p>于是Makefile可以改成如下：<br><img src="https://img-blog.csdnimg.cn/20190407110307595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>上面的例子中目标对象的依赖对象都只有一个，可以用\$^,也可以用\$&lt;。</p>
+<p>d* %：通配符，关于%的用法，下文会举例说明<br>下面我们用%再次简化makefile：<br>这次我们用一个稍复杂的例子说明，这是根据上面的介绍写出的makefile：<br><img src="https://img-blog.csdnimg.cn/2019040711220225.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>有关gcc的用法参考：<a href="https://blog.csdn.net/qq_39383636/article/details/89043645" target="_blank" rel="noopener">linux-&gt;gcc</a></p>
+</blockquote>
+<p>用%通配符简化后：<br><img src="https://img-blog.csdnimg.cn/20190407112651997.png" alt="在这里插入图片描述"><br>可以看出，如果对许多某一类型的对象有同样的操作，用%代表每一个以 <strong>.o</strong>（这里以 <strong>.o</strong>为例）结尾的文件，可以大大简化代码的篇幅。</p>
+<h2 id="三个关键字"><a href="#三个关键字" class="headerlink" title="三个关键字"></a>三个关键字</h2><ul>
+<li><strong>wildcard</strong> ：获取指定文件名</li>
+<li><strong>patsubst</strong> ：字符串替换</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190407115023938.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><strong>.PHONY</strong> （大写）：用于伪对象声明，不管目标对象是否存在，是否最新，每次都重新生成<br><img src="https://img-blog.csdnimg.cn/20190407120501196.png" alt="在这里插入图片描述"><br>只要输入命令<code>make clean</code>不管文件是否最新，<code>rm $(obj) main main2</code>都会执行，<code>make clean</code>可以指定make的操作对象，make会直接在makefile中搜索clean对象并执行它对应的命令。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/06/09/linux-makefile/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-linux-彩色进度条" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/">linux-&gt;彩色进度条</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/" class="archive-article-date">
+  	<time datetime="2019-06-09T15:43:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="分享一个彩色进度条小程序"><a href="#分享一个彩色进度条小程序" class="headerlink" title="分享一个彩色进度条小程序"></a>分享一个彩色进度条小程序</h1><h2 id="黑白进度条"><a href="#黑白进度条" class="headerlink" title="黑白进度条"></a>黑白进度条</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"[%d]"</span>, i);<span class="comment">//显示数字进度</span></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">1</span>; j &lt;= i; j++)&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"*"</span>);</span><br><span class="line">      fflush(<span class="built_in">stdout</span>);<span class="comment">//刷新缓冲区</span></span><br><span class="line">    &#125;</span><br><span class="line">    usleep(<span class="number">100000</span>);<span class="comment">//等待0.1s</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\r"</span>);<span class="comment">//"\r"覆盖打印</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单色版"><a href="#单色版" class="headerlink" title="单色版"></a>单色版</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[%d]"</span>,i);</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= i; j++)&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"\e[1;36m*\e[0m"</span>);</span><br><span class="line">     fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    usleep(<span class="number">100000</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\r"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>关于颜色的设定：“\e”为转义选项，以m结束，从\e到之间的选项均为需要转义的参数，参数之间以“；”分隔</li>
+</ul>
+<p>这里仅讨论颜色相关的转义：<br>格式：<code>\e[%d;%d;%dm显示的内容\e[0m</code><br>三个%d的含义 ：颜色模式 + 前景色 + 背景色</p>
+<ul>
+<li>第一个：0-&gt;普通；1-&gt;高亮</li>
+<li>第二个：30+（0~7）分别是：红、绿、黄、蓝、紫、青、白</li>
+<li>第三个：40+（0~7）分别是：红、绿、黄、蓝、紫、青、白</li>
+</ul>
+<blockquote>
+<p>参考：<a href="https://blog.csdn.net/wxy_2015/article/details/50640101" target="_blank" rel="noopener">https://blog.csdn.net/wxy_2015/article/details/50640101</a></p>
+</blockquote>
+<h2 id="彩色版"><a href="#彩色版" class="headerlink" title="彩色版"></a>彩色版</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[%d]"</span>,i);</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= i; j++)&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"\e[1;%dm*\e[0m"</span>, <span class="number">30</span> + i % <span class="number">7</span>);</span><br><span class="line">     fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    usleep(<span class="number">100000</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\r"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-实现minishell" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/">Linux-&gt;实现minishell</a>
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/" class="archive-article-date">
+  	<time datetime="2019-05-28T15:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="直接上代码，解析放在代码中"><a href="#直接上代码，解析放在代码中" class="headerlink" title="直接上代码，解析放在代码中"></a>直接上代码，解析放在代码中</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.获取标准输入中的字符串</span></span><br><span class="line"><span class="comment">//2.对字符串进行解析[ls   -l  -a]</span></span><br><span class="line"><span class="comment">//3.创建子进程</span></span><br><span class="line"><span class="comment">//4.父进程进行进程等待</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="comment">//shell始终在运行，因此这里用while（1）</span></span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[user@localhost]$ "</span>);<span class="comment">//这里不用\n刷新缓冲区并换行，因为另起一行</span></span><br><span class="line">    							<span class="comment">//输入非常不美观</span></span><br><span class="line">    fflush(<span class="built_in">stdout</span>); <span class="comment">//刷新缓冲区但是不换行</span></span><br><span class="line">    <span class="comment">//scanf("%s", buf);</span></span><br><span class="line">    <span class="comment">//%[^\n]  从缓冲区取数据的时候，遇到\n就停下来</span></span><br><span class="line">    <span class="comment">//经过这一步，缓冲区中留下了一个\n，导致scanf非阻塞（）</span></span><br><span class="line">    <span class="comment">//%*c  从缓冲区取出一个字符，丢弃这个字符</span></span><br><span class="line">    <span class="comment">//scanf获取的数据成功放入了几个空间，返回值就是几，例如这里将输入的值放入了buf</span></span><br><span class="line">    <span class="comment">//一个空间所以返回值为1</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">scanf</span>(<span class="string">"%[^\n]%*c"</span>, buf) != <span class="number">1</span>)&#123;</span><br><span class="line">      getchar();</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//printf("%s\n", buf);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> argc = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span>* argv[<span class="number">32</span>];</span><br><span class="line">    <span class="keyword">char</span>* ptr = buf;</span><br><span class="line">    <span class="keyword">while</span>(*ptr != <span class="string">'\0'</span>)&#123;</span><br><span class="line">      <span class="comment">//非空白字符进入判断</span></span><br><span class="line">      <span class="comment">//isspace()</span></span><br><span class="line">      <span class="comment">//return value:如果是空字符返回非零数值，否则返回0</span></span><br><span class="line">      <span class="keyword">if</span>(!<span class="built_in">isspace</span>(*ptr))&#123;</span><br><span class="line">        argv[argc] = ptr;</span><br><span class="line">        argc++;</span><br><span class="line">        <span class="keyword">while</span>(!<span class="built_in">isspace</span>(*ptr) &amp;&amp; *ptr != <span class="string">'\0'</span>)&#123;</span><br><span class="line">          ptr++;</span><br><span class="line">        &#125;</span><br><span class="line">        *ptr = <span class="string">'\0'</span>;</span><br><span class="line">        <span class="comment">//printf("argv[%d] = [%s]\n", argc, argv[argc - 1]);</span></span><br><span class="line">      &#125;</span><br><span class="line">      ptr++;</span><br><span class="line">    &#125;</span><br><span class="line">    argv[argc] = <span class="literal">NULL</span>; <span class="comment">//程序替换的最后一个参数要是NULL;</span></span><br><span class="line">    <span class="comment">//实现shell的内建命令cd</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(argv[<span class="number">0</span>], <span class="string">"cd"</span>))&#123;</span><br><span class="line">      <span class="comment">//int chdir(const char *path)</span></span><br><span class="line">      <span class="comment">//改变当前工作路径</span></span><br><span class="line">      chdir(argv[<span class="number">1</span>]);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> pid = fork();<span class="comment">//创建子进程</span></span><br><span class="line">    <span class="keyword">if</span>(pid &lt; <span class="number">0</span>)&#123;</span><br><span class="line">      perror(<span class="string">"fork error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(pid == <span class="number">0</span>) &#123;	<span class="comment">//子进程如果</span></span><br><span class="line">      execvp(argv[<span class="number">0</span>], argv);<span class="comment">//进行程序替换</span></span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    wait(<span class="literal">NULL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-C-namespace（命名空间）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

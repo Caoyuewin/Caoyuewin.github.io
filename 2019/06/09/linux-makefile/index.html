@@ -6,18 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://Caoyuewin.github.io">
-  <title>Archives: 2019/5 | Just Keep Running</title>
+  <title>linux-&gt;makefile | Just Keep Running</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Just Keep Running">
-<meta property="og:url" content="http://Caoyuewin.github.io/archives/2019/05/index.html">
+  <meta name="description" content="@[toc] make/makefile简介makefile: 普通文本文件，记录了项目的构建流程规则make：一个解释程序，到当前执行make命令的目录下寻找makefile文件，并且对makefile中记录的项目构建进行解释执行 makefile的编写规则 makefile的编写是有固定规则的，而不是随意的编写，下面举例说明。 编写规则需要注意一下几点： 第一句的格式必须是【目标对象】：【依赖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-&gt;makefile">
+<meta property="og:url" content="http://Caoyuewin.github.io/2019/06/09/linux-makefile/index.html">
 <meta property="og:site_name" content="Just Keep Running">
-<meta property="og:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta property="og:description" content="@[toc] make/makefile简介makefile: 普通文本文件，记录了项目的构建流程规则make：一个解释程序，到当前执行make命令的目录下寻找makefile文件，并且对makefile中记录的项目构建进行解释执行 makefile的编写规则 makefile的编写是有固定规则的，而不是随意的编写，下面举例说明。 编写规则需要注意一下几点： 第一句的格式必须是【目标对象】：【依赖">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407093702667.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407094915693.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407105004946.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407110307595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019040711220225.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407112651997.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407115023938.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407120501196.png">
+<meta property="og:updated_time" content="2019-06-09T15:45:11.883Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Just Keep Running">
-<meta name="twitter:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta name="twitter:title" content="linux-&gt;makefile">
+<meta name="twitter:description" content="@[toc] make/makefile简介makefile: 普通文本文件，记录了项目的构建流程规则make：一个解释程序，到当前执行make命令的目录下寻找makefile文件，并且对makefile中记录的项目构建进行解释执行 makefile的编写规则 makefile的编写是有固定规则的，而不是随意的编写，下面举例说明。 编写规则需要注意一下几点： 第一句的格式必须是【目标对象】：【依赖">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190407093702667.png">
   
     <link rel="alternative" href="/atom.xml" title="Just Keep Running" type="application/atom+xml">
   
@@ -165,211 +175,209 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-linux-makefile" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux-&gt;makefile
+    </h1>
+  
+
+        
+        <a href="/Caoyuewin.github.io/2019/06/09/linux-makefile/" class="archive-article-date">
+  	<time datetime="2019-06-09T15:44:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-09</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@[toc]</p>
+<h1 id="make-makefile简介"><a href="#make-makefile简介" class="headerlink" title="make/makefile简介"></a>make/makefile简介</h1><p><strong>makefile</strong>: 普通文本文件，记录了项目的构建流程规则<br><strong>make</strong>：一个解释程序，到当前执行make命令的目录下寻找makefile文件，并且对makefile中记录的项目构建进行解释执行</p>
+<h1 id="makefile的编写规则"><a href="#makefile的编写规则" class="headerlink" title="makefile的编写规则"></a>makefile的编写规则</h1><ul>
+<li><strong>makefile</strong>的编写是有固定规则的，而不是随意的编写，下面举例说明。<br><img src="https://img-blog.csdnimg.cn/20190407093702667.png" alt="makefile"><ul>
+<li>编写规则需要注意一下几点：<ul>
+<li>第一句的格式必须是【目标对象】：【依赖对象】<ul>
+<li>依赖对象：后面的操作的对象</li>
+<li>目标对象：执行操作命令后生成的对象（文件）<br>*第二句：【Tab】【执行的操作】，==注意这里的Tab制表符不能是四个空格==</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="make的执行规则"><a href="#make的执行规则" class="headerlink" title="make的执行规则"></a>make的执行规则</h1><ul>
+<li><strong>make</strong>解释执行时，只会寻找第一个目标对象并执行其对应的操作</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190407094915693.png" alt="makefile"><br>这样编写makefile，执行make后只会生成main，不会生成main2</p>
+<ul>
+<li><strong>make</strong>执行的几个步骤（系统自行执行，用户看不到）<ul>
+<li>若目标对象不存在：执行命令操作，生成目标对象</li>
+<li>若目标对象已存在：判断是否有依赖对象<ul>
+<li>没有依赖对象：报错，不需要重新生成</li>
+<li>有依赖对象：判断依赖对象是否存在<ul>
+<li>依赖对象存在：通过目标对象和依赖对象的最后一次修改时间判断是否需要重新执行下面的命令操作</li>
+<li>依赖对象不存在(makefile所在目录没有依赖对象（文件）)：make继续子啊makefile中寻找依赖对象的生成规则，进而生成目标对象，根据这个规则，如果相同时生成main和main2，可以这样写：<br><img src="https://img-blog.csdnimg.cn/20190407105004946.png" alt="在这里插入图片描述"><br>将main和main2作为All的依赖对象，make就会继续寻找main和main2的生成规则并且执行对应的操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="编写技巧"><a href="#编写技巧" class="headerlink" title="编写技巧"></a>编写技巧</h1><h2 id="三个预定义变量"><a href="#三个预定义变量" class="headerlink" title="三个预定义变量"></a>三个预定义变量</h2><ul>
+<li>$@：目标对象</li>
+<li>$^：所有依赖对象</li>
+<li>$&lt;：依赖对象中的第一个</li>
+</ul>
+<p>于是Makefile可以改成如下：<br><img src="https://img-blog.csdnimg.cn/20190407110307595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzgzNjM2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>上面的例子中目标对象的依赖对象都只有一个，可以用\$^,也可以用\$&lt;。</p>
+<p>d* %：通配符，关于%的用法，下文会举例说明<br>下面我们用%再次简化makefile：<br>这次我们用一个稍复杂的例子说明，这是根据上面的介绍写出的makefile：<br><img src="https://img-blog.csdnimg.cn/2019040711220225.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>有关gcc的用法参考：<a href="https://blog.csdn.net/qq_39383636/article/details/89043645" target="_blank" rel="noopener">linux-&gt;gcc</a></p>
+</blockquote>
+<p>用%通配符简化后：<br><img src="https://img-blog.csdnimg.cn/20190407112651997.png" alt="在这里插入图片描述"><br>可以看出，如果对许多某一类型的对象有同样的操作，用%代表每一个以 <strong>.o</strong>（这里以 <strong>.o</strong>为例）结尾的文件，可以大大简化代码的篇幅。</p>
+<h2 id="三个关键字"><a href="#三个关键字" class="headerlink" title="三个关键字"></a>三个关键字</h2><ul>
+<li><strong>wildcard</strong> ：获取指定文件名</li>
+<li><strong>patsubst</strong> ：字符串替换</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190407115023938.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><strong>.PHONY</strong> （大写）：用于伪对象声明，不管目标对象是否存在，是否最新，每次都重新生成<br><img src="https://img-blog.csdnimg.cn/20190407120501196.png" alt="在这里插入图片描述"><br>只要输入命令<code>make clean</code>不管文件是否最新，<code>rm $(obj) main main2</code>都会执行，<code>make clean</code>可以指定make的操作对象，make会直接在makefile中搜索clean对象并执行它对应的命令。</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/Caoyuewin.github.io/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/" class="archive-article-date">
-  	<time datetime="2019-05-28T15:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/">Linux-&gt;实现minishell</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://Caoyuewin.github.io/2019/06/09/linux-makefile/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux-&gt;彩色进度条</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/">C++ -&gt; namespace（命名空间）</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/">C++ -&gt;缺省参数，函数重载</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/">Linux-&gt;线程基本操作（创建、终止、等待、分离）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/进程等待/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/进程等待/">Linux-&gt;进程等待</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" class="archive-article-date">
-  	<time datetime="2019-05-24T17:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/">生产者与消费者模型--条件变量实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/19/first-pubblish/" class="archive-article-date">
-  	<time datetime="2019-05-19T15:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/19/first-pubblish/">first pubblish</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -392,8 +400,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
