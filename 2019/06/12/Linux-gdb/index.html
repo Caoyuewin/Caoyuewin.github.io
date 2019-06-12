@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://Caoyuewin.github.io">
-  <title>Archives: 2019 | Just Keep Running</title>
+  <title>Linux gdb | Just Keep Running</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Just Keep Running">
-<meta property="og:url" content="http://Caoyuewin.github.io/archives/2019/index.html">
+  <meta name="description" content="调试一个程序的前提1.程序必须是可调试程序 可执行程序的两种版本 release版本  不包含调试符号信息，不可调试 Debug版本  包含调试符号信息，可调试   gcc默认生成的可执行程序的版本是release版本  gcc生成Debug版本的程序 -g选项 gcc -g test.c -o test  2.加载一个可调试程序 gdb ./test gdb -&amp;gt; file ./main">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux gdb">
+<meta property="og:url" content="http://Caoyuewin.github.io/2019/06/12/Linux-gdb/index.html">
 <meta property="og:site_name" content="Just Keep Running">
-<meta property="og:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta property="og:description" content="调试一个程序的前提1.程序必须是可调试程序 可执行程序的两种版本 release版本  不包含调试符号信息，不可调试 Debug版本  包含调试符号信息，可调试   gcc默认生成的可执行程序的版本是release版本  gcc生成Debug版本的程序 -g选项 gcc -g test.c -o test  2.加载一个可调试程序 gdb ./test gdb -&amp;gt; file ./main">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190405164155397.PNG">
+<meta property="og:updated_time" content="2019-06-12T15:59:42.207Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Just Keep Running">
-<meta name="twitter:description" content="Life was a box of chocolates,you never know what you&apos;re gonna get.">
+<meta name="twitter:title" content="Linux gdb">
+<meta name="twitter:description" content="调试一个程序的前提1.程序必须是可调试程序 可执行程序的两种版本 release版本  不包含调试符号信息，不可调试 Debug版本  包含调试符号信息，可调试   gcc默认生成的可执行程序的版本是release版本  gcc生成Debug版本的程序 -g选项 gcc -g test.c -o test  2.加载一个可调试程序 gdb ./test gdb -&amp;gt; file ./main">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190405164155397.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Just Keep Running" type="application/atom+xml">
   
@@ -165,292 +168,200 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Linux-gdb" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Linux gdb
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/Caoyuewin.github.io/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/06/12/Linux-gdb/" class="archive-article-date">
+
+        
+        <a href="/Caoyuewin.github.io/2019/06/12/Linux-gdb/" class="archive-article-date">
   	<time datetime="2019-06-12T15:59:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-12</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/06/12/Linux-gdb/">Linux gdb</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="调试一个程序的前提"><a href="#调试一个程序的前提" class="headerlink" title="调试一个程序的前提"></a>调试一个程序的前提</h1><h2 id="1-程序必须是可调试程序"><a href="#1-程序必须是可调试程序" class="headerlink" title="1.程序必须是可调试程序"></a>1.程序必须是可调试程序</h2><ul>
+<li>可执行程序的两种版本<ul>
+<li>release版本  不包含调试符号信息，不可调试</li>
+<li>Debug版本  包含调试符号信息，可调试</li>
+</ul>
+</li>
+<li>gcc默认生成的可执行程序的版本是release版本</li>
+</ul>
+<h3 id="gcc生成Debug版本的程序"><a href="#gcc生成Debug版本的程序" class="headerlink" title="gcc生成Debug版本的程序"></a>gcc生成Debug版本的程序</h3><ul>
+<li><strong>-g</strong>选项</li>
+<li>gcc <strong>-g</strong> test.c -o test</li>
+</ul>
+<h2 id="2-加载一个可调试程序"><a href="#2-加载一个可调试程序" class="headerlink" title="2.加载一个可调试程序"></a>2.加载一个可调试程序</h2><ul>
+<li>gdb <strong>.</strong>/test</li>
+<li>gdb -&gt; file <strong>.</strong>/main   加载一个程序</li>
+<li>gdb r [para1] [para2] [para3]……   加载运行参数</li>
+</ul>
+<h1 id="常见的调试方法"><a href="#常见的调试方法" class="headerlink" title="常见的调试方法"></a>常见的调试方法</h1><h2 id="单步调试"><a href="#单步调试" class="headerlink" title="单步调试"></a>单步调试</h2><p>调试对象<br><img src="https://img-blog.csdnimg.cn/20190405164155397.PNG" alt="test.c"></p>
+<ul>
+<li>r  运行程序</li>
+<li>start  开始单步调试</li>
+<li>c  继续运行程序</li>
+<li>l(list) [num]  查看第n行附近的代码<ul>
+<li>l file : line</li>
+</ul>
+</li>
+<li>n  下一步，直接执行完整个函数</li>
+<li>s  跟踪进入函数</li>
+<li>until  [num]  直接运行到指定行</li>
+</ul>
+<h2 id="打断点"><a href="#打断点" class="headerlink" title="打断点"></a>打断点</h2><ul>
+<li>b(break) 20   在当前调试程序的第20行打断点</li>
+<li>b filename:20  在filename的第20行打断点</li>
+<li>b print   给函数print打断点</li>
+<li>i b (informantion breakpoint)  查看断点信息</li>
+<li>d(delete)  [id]  删除1号断点</li>
+</ul>
+<h2 id="监视变量"><a href="#监视变量" class="headerlink" title="监视变量"></a>监视变量</h2><ul>
+<li>watch [var]   监视变量var的内容</li>
+<li>print ptr  打印变量内容</li>
+<li>p *point  查看指针指向的内容</li>
+</ul>
+<h2 id="查看调用栈"><a href="#查看调用栈" class="headerlink" title="查看调用栈"></a>查看调用栈</h2><ul>
+<li>bt 查看函数调用栈，快速定位程序崩溃位置，栈顶函数即程序崩溃位置</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://Caoyuewin.github.io/2019/06/12/Linux-gdb/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/06/09/linux-makefile/" class="archive-article-date">
-  	<time datetime="2019-06-09T15:44:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-09</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/Caoyuewin.github.io/2019/06/09/linux-makefile/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux-&gt;makefile</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/06/09/linux-makefile/">linux-&gt;makefile</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/" class="archive-article-date">
-  	<time datetime="2019-06-09T15:43:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/06/09/linux-彩色进度条/">linux-&gt;彩色进度条</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/" class="archive-article-date">
-  	<time datetime="2019-05-28T15:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/28/Linux-实现minishell/">Linux-&gt;实现minishell</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-namespace（命名空间）/">C++ -&gt; namespace（命名空间）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:20:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/C-缺省参数，函数重载/">C++ -&gt;缺省参数，函数重载</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/Linux-线程基本操作（创建、终止、等待、分离）/">Linux-&gt;线程基本操作（创建、终止、等待、分离）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/进程等待/" class="archive-article-date">
-  	<time datetime="2019-05-25T09:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/进程等待/">Linux-&gt;进程等待</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/" class="archive-article-date">
-  	<time datetime="2019-05-24T17:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/25/生产者与消费者模型-条件变量实现/">生产者与消费者模型--条件变量实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/Caoyuewin.github.io/2019/05/19/first-pubblish/" class="archive-article-date">
-  	<time datetime="2019-05-19T15:38:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Caoyuewin.github.io/2019/05/19/first-pubblish/">first pubblish</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -473,8 +384,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
